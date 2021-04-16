@@ -8,8 +8,8 @@ import axios from 'axios';
 
 
 
-
 export default function SignIn() {
+
 	const history = useHistory();
 	const initialFormData = Object.freeze({
 		email: '',
@@ -27,7 +27,6 @@ export default function SignIn() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(formData);
 
 		axiosInstance
 			.post(`auth/token/`, {
@@ -41,7 +40,6 @@ export default function SignIn() {
 			.then((res) => {
 				localStorage.setItem('access_token', res.data.access_token);
 				localStorage.setItem('refresh_token', res.data.refresh_token);
-				localStorage.setItem('userLogin', formData.email);
 				history.push('/');
 				window.location.reload();
 			});
@@ -63,7 +61,7 @@ export default function SignIn() {
 				localStorage.setItem('access_token', res.data.access_token);
 				localStorage.setItem('refresh_token', res.data.refresh_token);
 				history.push('/');
-				window.location.reload();
+			    window.location.reload();
 			});
 	};
 

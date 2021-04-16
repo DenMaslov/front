@@ -8,8 +8,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { NavLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
+import axiosInstance from '../../axios/login';
+
+
 
 import { setAuthenticated } from '../../redux/actions/userProfile.js'
+import { setUserData } from '../../redux/actions/userData.js'
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
@@ -27,23 +31,18 @@ const useStyles = makeStyles((theme) => ({
 function Header() {
 
 	const dispatch = useDispatch()
-	const isAuth  = useSelector(state => state.user.isAuth)
+	const isAuth = useSelector(state => state.user.isAuth)
 
 	React.useEffect(() => {
-		console.log(isAuth)
-	},[isAuth])
-
-	React.useEffect(() => {
-		if(localStorage.getItem("access_token") !== null)
+		if (localStorage.getItem("access_token") !== null) 
 		{
 			dispatch(setAuthenticated(true))
 		}
-		
+
 	}, [localStorage.getItem("access_token")])
 
 
-	function onClickLogOut()
-	{
+	function onClickLogOut() {
 		dispatch(setAuthenticated(false))
 	}
 
@@ -93,7 +92,7 @@ function Header() {
 						to="/login"
 					>
 						Login
-					</Button> }
+					</Button>}
 					{isAuth && <Button
 						href="#"
 						color="primary"
@@ -104,7 +103,17 @@ function Header() {
 						to="/logout"
 					>
 						Logout
-					</Button> }
+					</Button>}
+					{isAuth && <Button
+						href="#"
+						color="primary"
+						variant="outlined"
+						className={classes.link}
+						component={NavLink}
+						to="/profile"
+					>
+						My Profile
+					</Button>}
 				</Toolbar>
 			</AppBar>
 		</React.Fragment>
