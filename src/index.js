@@ -1,17 +1,50 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import * as serviceWorker from './serviceWorker';
 import './index.css';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Header from './components/header/header';
+import Footer from './components/footer';
+import Register from './components/auth/register';
+import Login from './components/auth/login';
+import Logout from './components/auth/logout';
+import Single from './components/posts/single';
+import Search from './components/posts/search';
+import Admin from './Admin';
+import Create from './components/admin/create';
+import Edit from './components/admin/edit';
+import Delete from './components/admin/delete';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+import store from './redux/store.js';
+
+const routing = (
+	<Router>
+    <Provider store={store}>
+		<React.StrictMode>
+			<Header />
+			<Switch>
+				<Route exact path="/" component={App} />
+				<Route exact path="/admin" component={Admin} />
+				<Route exact path="/admin/create" component={Create} />
+				<Route exact path="/admin/edit/:id" component={Edit} />
+				<Route exact path="/admin/delete/:id" component={Delete} />
+				<Route path="/register" component={Register} />
+				<Route path="/login" component={Login} />
+				<Route path="/logout" component={Logout} />
+				<Route path="/post/:slug" component={Single} />
+				<Route path="/search" component={Search} />
+			</Switch>
+			<Footer />
+		</React.StrictMode>
+		</Provider>
+	</Router>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+ReactDOM.render(routing, document.getElementById('root'));
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();
